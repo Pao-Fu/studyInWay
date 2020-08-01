@@ -1,11 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box1 {
+            position: absolute;
+            width: 240px;
+            height: 200px;
+            left: 50px;
+            top: 50px;
+            border: 1px solid black;
+            overflow: hidden;
+        }
+
+        .box1 img {
+            width: 240px;
+            height: 200px;
+        }
+
+        .box2 {
+            position: absolute;
+            left: 500px;
+            top: 50px;
+            border: 1px solid black;
+            width: 360px;
+            height: 290px;
+            overflow: hidden;
+        }
+
+        .box2 img {
+            width: 960px;
+            height: 720px;
+            position: absolute;
+        }
+
+        #mask {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: white;
+            opacity: 0.5;
+            left: 0px;
+            top: 0px;
+            display: none;
+        }
+    </style>
+    <script src="js/jquery-1.10.1.min.js"></script>
+    <script>
+        $(function () {
+            $(".box1").mouseenter(function () {
+                $("#mask").show()
+            }).mouseleave(function () {
+                $("#mask").hide()
+            }).mousemove(function (e) {
+                let l = e.clientX - $(".box1").offset().left - 50
+                let h = e.clientY - $(".box1").offset().top - 50
+                if (l <= 0) l = 0
+                if (l >= 141) l = 141
+                if (h <= 0) h = 0
+                if (h >= 100) h = 100
+                $("#mask").css({
+                    left: l,
+                    top: h
+                })
+                $(".box2 img").css({
+                    left:-l*4,
+                    top:-h*4
+                })
+            })
+
+        })
+    </script>
 </head>
+
 <body>
-    <h1>早上！</h1>
+    <div class="box1">
+        <img src="img/1.jpg" alt="">
+        <div id="mask"></div>
+    </div>
+    <div class="box2">
+        <img src="img/1.jpg" alt="">
+    </div>
 </body>
+
 </html>
